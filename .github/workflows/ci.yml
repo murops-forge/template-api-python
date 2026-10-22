@@ -65,11 +65,12 @@ jobs:
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: coverage
-      # skipped when the org has no SonarCloud token, e.g. on Dependabot PRs
+      # skipped when the org has no SonarCloud token, e.g. on Dependabot PRs.
+      # The gate is only enforced on PRs, the first analysis of a branch has no baseline.
       - uses: SonarSource/sonarqube-scan-action@d209202bc7d53ff1cc128f7f907dac145c9d6ae9 # v8.3.0
         if: env.SONAR_TOKEN != ''
         with:
           args: >
             -Dsonar.organization=${{ vars.SONAR_ORGANIZATION }}
             -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
-            -Dsonar.qualitygate.wait=true
+            -Dsonar.qualitygate.wait=${{ github.event_name == 'pull_request' }}

@@ -24,6 +24,6 @@ docker run --rm -p 8080:8080 app
 
 - `test`: ruff lint and format check, pytest with coverage
 - `trivy`: scans the Dockerfile and the built image, fails on fixable HIGH/CRITICAL findings and uploads the report to the Security tab
-- `sonar`: SonarCloud analysis with quality gate, skipped when the organization has no `SONAR_TOKEN`
+- `sonar`: SonarCloud analysis, the quality gate fails the job on pull requests. Skipped when the organization has no `SONAR_TOKEN`
 
 These are the checks Forge requires on `main` and `homol`.
